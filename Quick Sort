@@ -1,0 +1,67 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+int QuickProcedure(int *arr,int beg,int last)
+{
+    int first=beg;
+    while(last>beg){
+     while(arr[last]>arr[first])
+    {
+        last--;
+    }
+    if(last==first)
+        return(first);
+    if(arr[last]<arr[first])
+    {
+        int temp=arr[first];
+        arr[first]=arr[last];
+        arr[last]=temp;
+        first=last;
+    }
+    while (arr[beg]<arr[first])
+    {
+        beg++;
+    }
+    if(first==beg)
+        return(first);
+    if(arr[beg]>arr[first])
+    {
+        int temp=arr[beg];
+        arr[beg]=arr[first];
+        arr[first]=temp;
+        first=beg;
+    }
+
+    }
+    return(first);
+}
+void quickSort(int *arr,int last)
+{
+    stack<int> left;
+    stack<int> right;
+    left.push(0);right.push(last);
+    while (!(left.empty()))
+    {
+        int beg=left.top();
+        int end=right.top();
+        left.pop();right.pop();
+        int bw=QuickProcedure(arr,beg,end);
+        if(beg<(bw-1))
+        {
+            left.push(beg);right.push(bw-1);
+        }
+        if(end>(bw+1))
+        {
+            left.push(bw+1);right.push(end);
+        }
+    }
+    
+}
+int main()
+{
+    int arr[6]={-2,5,6,0,55};
+    quickSort(arr,4);
+    for(int i=0;i<5;i++)
+     cout<<arr[i]<<" ";
+    return(0);
+}
