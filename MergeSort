@@ -1,0 +1,56 @@
+#include<iostream>
+#include<utility>
+#include<bits/stdc++.h>
+//#include<algorithm>
+using namespace std;
+void Merge(int *arr,int start,int mid,int end){
+    vector<int> temp;
+    int START=start,Start2=mid+1;
+    while (START<=mid && Start2<=end)
+    {
+        if(arr[START]<arr[Start2]){
+            temp.push_back(arr[START]);
+            START++;
+        }
+        else{
+            temp.push_back(arr[Start2]);
+            Start2++;
+        }
+    }
+    if(START>mid){
+        while(Start2<=end){
+            temp.push_back(arr[Start2]);
+            Start2++;
+        }
+    }
+    if(Start2>end){
+        while(START<=mid){
+            temp.push_back(arr[START]);
+            START++;
+        }
+    }
+    for(int i=0;i<temp.size();i++){
+        arr[start]=temp[i];
+        start++;
+    }
+
+}
+void mergeSort(int *arr,int start,int end){
+    if(start<end){
+        int mid=(start+end)/2;
+        mergeSort(arr,start,mid);
+        mergeSort(arr,(mid+1),end);
+        Merge(arr,start,mid,end);
+    }
+}
+int main()
+{
+    
+    int arr[7]={9,4,7,6,1,1,1};
+    mergeSort(arr,0,6);
+    for(int i=0;i<7;i++){
+        cout<<arr[i]<<',';
+    }
+    return(0);
+
+}
