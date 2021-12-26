@@ -1,0 +1,56 @@
+
+int partition(int input[],int start,int end){
+    int count=start,data=input[start];
+    for(int i=start;i<=end;i++){
+        if(input[i]<data){
+            count++;
+        }
+    }
+    input[start]=input[count];
+    input[count]=data;
+    int left=start,right=end;
+    while(left!=count && right!=count){
+        if(input[left]<data){
+            left++;
+        }
+        else if(input[right]>=data){
+            right--;
+        }
+        else{
+            int temp=input[left];
+            input[left]=input[right];
+            input[right]=temp;
+            left++;right--;
+        }
+    }
+    return count;
+}
+
+void quick_sort(int input[],int start,int end){
+    if(start>=end){
+        return;
+    }
+    int c=partition(input,start,end);
+    if(c==start){
+    	quick_sort(input,c+1,end);    
+    }
+    else if(c==end){
+ 		quick_sort(input,start,c-1);       
+    }
+    else{
+    	quick_sort(input,start,c-1);
+    	quick_sort(input,c+1,end);    
+    }
+    
+    
+}
+
+void quickSort(int input[], int size) {
+  /* Don't write main().
+     Don't read input, it is passed as function argument.
+     Change in the given array itself.
+     Taking input and printing output is handled automatically.
+  */
+    quick_sort(input,0,size-1);
+
+}
